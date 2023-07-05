@@ -26,7 +26,7 @@ export class HandSolver {
         handRotation.y -= side === LEFT ? 0.4 : 0.4;
 
         let hand: Record<string, unknown> = {};
-        hand[side + "Wrist"] = { x: handRotation.x, y: handRotation.y, z: handRotation.z };
+        hand[side + "Wrist"] = { x: handRotation.x, y: -handRotation.y, z: handRotation.z };
         hand[side + "RingProximal"] = { x: 0, y: 0, z: Vector.angleBetween3DCoords(lm[0], lm[13], lm[14]) };
         hand[side + "RingIntermediate"] = { x: 0, y: 0, z: Vector.angleBetween3DCoords(lm[13], lm[14], lm[15]) };
         hand[side + "RingDistal"] = { x: 0, y: 0, z: Vector.angleBetween3DCoords(lm[14], lm[15], lm[16]) };

@@ -34,10 +34,10 @@ export const calcHips = (lm3d: TFVectorPose, lm2d: Omit<TFVectorPose, "z">) => {
 
     hips.rotation = Vector.rollPitchYaw(lm3d[23], lm3d[24]);
     //fix -PI, PI jumping
-    if (hips.rotation.y > 0.5) {
-        hips.rotation.y -= 2;
+    if (hips.rotation.y < -0.5) {
+        hips.rotation.y += 2;
     }
-    hips.rotation.y += 0.5;
+    hips.rotation.y -= 0.5;
     //Stop jumping between left and right shoulder tilt
     if (hips.rotation.z > 0) {
         hips.rotation.z = 1 - hips.rotation.z;
@@ -51,18 +51,18 @@ export const calcHips = (lm3d: TFVectorPose, lm2d: Omit<TFVectorPose, "z">) => {
 
     const spine = Vector.rollPitchYaw(lm3d[11], lm3d[12]);
     //fix -PI, PI jumping
-    if (spine.y > 0.5) {
-        spine.y -= 2;
+    if (spine.y < -0.5) {
+        spine.y += 2;
     }
-    spine.y += 0.5;
-    //Stop jumping between left and right shoulder tilt
+    spine.y -= 0.5;
+    // //Stop jumping between left and right shoulder tilt
     if (spine.z > 0) {
         spine.z = 1 - spine.z;
     }
     if (spine.z < 0) {
         spine.z = -1 - spine.z;
     }
-    //fix weird large numbers when 2 shoulder points get too close
+    // fix weird large numbers when 2 shoulder points get too close
     const turnAroundAmount = remap(Math.abs(spine.y), 0.2, 0.4);
     spine.z *= 1 - turnAroundAmount;
     spine.x = 0; //temp fix for inaccurate X axis

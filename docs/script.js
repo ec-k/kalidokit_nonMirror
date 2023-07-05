@@ -15,12 +15,12 @@ document.body.appendChild(renderer.domElement);
 
 // camera
 const orbitCamera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 1000);
-orbitCamera.position.set(0.0, 1.4, 0.7);
+orbitCamera.position.set(0.0, 1.4, 3);
 
 // controls
 const orbitControls = new THREE.OrbitControls(orbitCamera, renderer.domElement);
 orbitControls.screenSpacePanning = true;
-orbitControls.target.set(0.0, 1.4, 0.0);
+orbitControls.target.set(0.0, 0.9, 0.0);
 orbitControls.update();
 
 // scene
@@ -60,7 +60,7 @@ loader.load(
         THREE.VRM.from(gltf).then((vrm) => {
             scene.add(vrm.scene);
             currentVrm = vrm;
-            currentVrm.scene.rotation.y = Math.PI; // Rotate model 180deg to face camera
+            // currentVrm.scene.rotation.y = Math.PI; // Rotate model 180deg to face camera
         });
     },
 
@@ -153,8 +153,8 @@ const animateVRM = (vrm, results) => {
     // Pose 2D landmarks are with respect to videoWidth and videoHeight
     const pose2DLandmarks = results.poseLandmarks;
     // Be careful, hand landmarks may be reversed
-    const leftHandLandmarks = results.rightHandLandmarks;
-    const rightHandLandmarks = results.leftHandLandmarks;
+    const leftHandLandmarks = results.leftHandLandmarks;
+    const rightHandLandmarks = results.rightHandLandmarks;
 
     // Animate Face
     if (faceLandmarks) {

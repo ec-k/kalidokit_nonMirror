@@ -342,13 +342,13 @@ export default class Vector {
     static findRotation(a: Vector | XYZ, b: Vector | XYZ, normalize = true) {
         if (normalize) {
             return new Vector(
-                Vector.normalizeRadians(Vector.find2DAngle(a.z, a.x, b.z, b.x)),
+                -Vector.normalizeRadians(Vector.find2DAngle(a.z, a.x, b.z, b.x)),
                 Vector.normalizeRadians(Vector.find2DAngle(a.z, a.y, b.z, b.y)),
                 Vector.normalizeRadians(Vector.find2DAngle(a.x, a.y, b.x, b.y))
             );
         } else {
             return new Vector(
-                Vector.find2DAngle(a.z, a.x, b.z, b.x),
+                -Vector.find2DAngle(a.z, a.x, b.z, b.x),
                 Vector.find2DAngle(a.z, a.y, b.z, b.y),
                 Vector.find2DAngle(a.x, a.y, b.x, b.y)
             );
@@ -364,8 +364,8 @@ export default class Vector {
         if (!c) {
             return new Vector(
                 Vector.normalizeAngle(Vector.find2DAngle(a.z, a.y, b.z, b.y)),
-                Vector.normalizeAngle(Vector.find2DAngle(a.z, a.x, b.z, b.x)),
-                Vector.normalizeAngle(Vector.find2DAngle(a.x, a.y, b.x, b.y))
+                -Vector.normalizeAngle(Vector.find2DAngle(a.z, a.x, b.z, b.x)),
+                -Vector.normalizeAngle(Vector.find2DAngle(a.x, a.y, b.x, b.y))
             );
         }
         const qb = (b as Vector).subtract(a as Vector);
@@ -376,9 +376,9 @@ export default class Vector {
         const unitX = qb.unit();
         const unitY = unitZ.cross(unitX);
 
-        const beta = Math.asin(unitZ.x) || 0;
+        const beta = Math.asin(-unitZ.x) || 0;
         const alpha = Math.atan2(-unitZ.y, unitZ.z) || 0;
-        const gamma = Math.atan2(-unitY.x, unitX.x) || 0;
+        const gamma = Math.atan2(unitY.x, unitX.x) || 0;
 
         return new Vector(Vector.normalizeAngle(alpha), Vector.normalizeAngle(beta), Vector.normalizeAngle(gamma));
     }

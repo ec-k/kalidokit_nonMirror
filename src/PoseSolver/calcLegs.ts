@@ -16,30 +16,30 @@ export const offsets = {
  * @param {Results} lm : array of 3D pose vectors from tfjs or mediapipe
  */
 export const calcLegs = (lm: Results) => {
-    const rightUpperLegSphericalCoords = Vector.getSphericalCoords(lm[23], lm[25], { x: "y", y: "z", z: "x" });
-    const leftUpperLegSphericalCoords = Vector.getSphericalCoords(lm[24], lm[26], { x: "y", y: "z", z: "x" });
-    const rightLowerLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[23], lm[25], lm[27], {
+    const rightUpperLegSphericalCoords = Vector.getSphericalCoords(lm[24], lm[26], { x: "y", y: "z", z: "x" });
+    const leftUpperLegSphericalCoords = Vector.getSphericalCoords(lm[23], lm[25], { x: "y", y: "z", z: "x" });
+    const rightLowerLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[24], lm[26], lm[28], {
         x: "y",
         y: "z",
         z: "x",
     });
-    const leftLowerLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[24], lm[26], lm[28], {
+    const leftLowerLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[23], lm[25], lm[27], {
         x: "y",
         y: "z",
         z: "x",
     });
-    const hipRotation = Vector.findRotation(lm[23], lm[24]);
+    const hipRotation = Vector.findRotation(lm[24], lm[23]);
 
     const UpperLeg = {
         r: new Vector({
             x: rightUpperLegSphericalCoords.theta,
             y: rightLowerLegSphericalCoords.phi,
-            z: rightUpperLegSphericalCoords.phi - hipRotation.z,
+            z: -rightUpperLegSphericalCoords.phi + hipRotation.z,
         }),
         l: new Vector({
             x: leftUpperLegSphericalCoords.theta,
             y: leftLowerLegSphericalCoords.phi,
-            z: leftUpperLegSphericalCoords.phi - hipRotation.z,
+            z: -leftUpperLegSphericalCoords.phi + hipRotation.z,
         }),
     };
 
