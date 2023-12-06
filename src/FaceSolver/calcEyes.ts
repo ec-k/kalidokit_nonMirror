@@ -106,7 +106,7 @@ export const pupilPos = (lm: Results, side: Side = LEFT) => {
     let ratioX = dx / (eyeWidth / 2);
     let ratioY = dy / (eyeWidth / 4);
 
-    ratioX *= 4;
+    ratioX *= -4;
     ratioY *= 4;
 
     return { x: ratioX, y: ratioY };
